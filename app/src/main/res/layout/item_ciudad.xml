@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:card_view="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            card_view:cardCornerRadius="4dp"
+            card_view:cardBackgroundColor="@android:color/white"
+            card_view:cardUseCompatPadding="true"
+            card_view:cardElevation="7dp">
+        >
+        <LinearLayout
+                android:id="@+id/lyCity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+            <TextView
+                    android:id="@+id/txtNombre"
+                    android:background="@color/colorPrimary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="12dp"
+                    android:textSize="16dp"
+                    android:textColor="#000"
+                    android:text="Nombre: "/>
+            <TextView
+                    android:id="@+id/txtCode"
+                    android:background="@color/colorPrimaryDark"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="12dp"
+                    android:textSize="16dp"
+                    android:textColor="#000"
+                    android:text="Code: "/>
+            <TextView
+                    android:id="@+id/txtId"
+                    android:background="@color/colorPrimary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="12dp"
+                    android:textSize="16dp"
+                    android:textColor="#000"
+                    android:text="Id: "/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</layout>
