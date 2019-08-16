@@ -8,27 +8,24 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jsb.monoprueba.R
 import com.jsb.monoprueba.data.db.AppDatabase
 import com.jsb.monoprueba.databinding.NotificacionesFragmentBinding
+import com.jsb.monoprueba.di.notificaciones.DaggerNotificacionesComponent
+import com.jsb.monoprueba.factory.*
 import com.jsb.monoprueba.model.Ciudad
 import kotlinx.android.synthetic.main.notificaciones_fragment.*
+import javax.inject.Inject
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- *
- */
+
 class FragmentNotificaciones : Fragment(), NotificacionesListener {
+
+    @Inject
+    lateinit var viewModelFactory: DaggerViewModelFactory
 
     private var adapter: NotificacionesAdapter? = null
     lateinit var binding: NotificacionesFragmentBinding
@@ -41,10 +38,12 @@ class FragmentNotificaciones : Fragment(), NotificacionesListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        DaggerNotificacionesComponent.create().inject(this)
         binding = DataBindingUtil.inflate(inflater,R.layout.notificaciones_fragment,container,false)
         binding.rvData1.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL,false)
 
-        val viewModel = ViewModelProviders.of(this).get(NotificacionesViewModel::class.java)
+        val viewModel = ViewModelProviders.of(this,viewModelFactory).get(NotificacionesViewModel::class.java)
         binding.viewmodelnotifica = viewModel
 
         viewModel.notificacionesListener = this

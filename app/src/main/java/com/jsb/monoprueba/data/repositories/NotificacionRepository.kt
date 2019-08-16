@@ -7,8 +7,9 @@ import com.jsb.monoprueba.model.Ciudad
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import javax.inject.Inject
 
-class NotificacionRepository {
+class NotificacionRepository @Inject constructor() {
 
     fun getNotificacion(): LiveData<ArrayList<Ciudad>> {
 

@@ -2,9 +2,10 @@ package com.jsb.monoprueba.ui.home.fragments.notificaciones
 
 import androidx.lifecycle.ViewModel
 import com.jsb.monoprueba.data.repositories.NotificacionRepository
+import javax.inject.Inject
 
 
-class NotificacionesViewModel: ViewModel() {
+class NotificacionesViewModel @Inject constructor(private val repository: NotificacionRepository): ViewModel() {
 
     var notificacionesListener: NotificacionesListener? = null
 

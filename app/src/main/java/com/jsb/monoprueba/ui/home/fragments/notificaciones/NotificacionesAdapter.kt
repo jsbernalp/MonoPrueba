@@ -25,7 +25,7 @@ class NotificacionesAdapter(val context: Context): RecyclerView.Adapter<Notifica
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CiudadViewHolder {
         val binding: ItemCiudadBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_ciudad, parent,false)
-        db = context?.let { AppDatabase(it) }!!
+        db = context.let { AppDatabase(it) }
         return CiudadViewHolder(binding)
 
     }

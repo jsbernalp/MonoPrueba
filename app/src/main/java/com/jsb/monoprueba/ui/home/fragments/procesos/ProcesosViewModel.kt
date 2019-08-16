@@ -4,13 +4,12 @@ import androidx.lifecycle.ViewModel
 import com.jsb.monoprueba.data.db.AppDatabase
 import com.jsb.monoprueba.data.repositories.CityRepository
 import com.jsb.monoprueba.model.Ciudad
+import javax.inject.Inject
 
-class ProcesosViewModel: ViewModel() {
+class ProcesosViewModel @Inject constructor(private val cityRepository: CityRepository): ViewModel() {
 
     var procesosListener: ProcesosListener? = null
-    lateinit var  db: AppDatabase
     var lstCities:ArrayList<Ciudad> = ArrayList<Ciudad>()
-
 
     fun LoadData(){
 

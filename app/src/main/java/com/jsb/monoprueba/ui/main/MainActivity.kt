@@ -1,32 +1,40 @@
 package com.jsb.monoprueba.ui.main
 
+
 import android.content.Intent
 import androidx.databinding.DataBindingUtil
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.*
 import com.jsb.monoprueba.R
 import com.jsb.monoprueba.databinding.ActivityMainBinding
+import com.jsb.monoprueba.di.main.DaggerMainComponent
+import com.jsb.monoprueba.factory.DaggerViewModelFactory
 import com.jsb.monoprueba.ui.home.HomeActivity
 import com.jsb.monoprueba.util.hide
 import com.jsb.monoprueba.util.show
 import com.jsb.monoprueba.util.toast
 import kotlinx.android.synthetic.main.activity_main.*
-
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), MainListener {
 
+    @Inject
+    lateinit var viewModelFactory: DaggerViewModelFactory
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        DaggerMainComponent.create().inject(this)
         val binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        val viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
-        binding.viewmodel = viewModel
+        val mainViewModel = ViewModelProviders.of(this,viewModelFactory).get(MainViewModel::class.java)
 
-        viewModel.mainListener = this
+        binding.viewmodel = mainViewModel
+        mainViewModel.mainListener = this
+
+
+
     }
+
 
     override fun onStarted() {
         progress_bar.show()
@@ -35,7 +43,7 @@ class MainActivity : AppCompatActivity(), MainListener {
     override fun onSuccess(loginResponse: LiveData<String>) {
         progress_bar.hide()
         loginResponse.observe(this, Observer {
-            //toast(it)
+            toast(it)
         })
         val intent = Intent(this, HomeActivity::class.java)
         startActivity(intent)
@@ -46,5 +54,8 @@ class MainActivity : AppCompatActivity(), MainListener {
         toast(message)
     }
 
-
 }
+
+
+
+

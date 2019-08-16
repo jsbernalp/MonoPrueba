@@ -8,8 +8,9 @@ import com.jsb.monoprueba.model.Usuario
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import javax.inject.Inject
 
-class UserRepository {
+class UserRepository @Inject constructor() {
 
     fun userLogin(usuario: Usuario):LiveData<String>{
         val loginResponse = MutableLiveData<String>()

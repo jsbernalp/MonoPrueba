@@ -12,17 +12,20 @@ import android.widget.Toast
 import androidx.core.view.MenuItemCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jsb.monoprueba.R
 import com.jsb.monoprueba.data.db.AppDatabase
 import com.jsb.monoprueba.databinding.ProcesosFragmentBinding
+import com.jsb.monoprueba.di.procesos.DaggerProcesosComponent
+
+import com.jsb.monoprueba.factory.*
 import com.jsb.monoprueba.model.Ciudad
 import kotlinx.android.synthetic.main.activity_home.toolbar
 import kotlinx.android.synthetic.main.procesos_fragment.*
+import javax.inject.Inject
+
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -34,8 +37,11 @@ private const val ARG_PARAM2 = "param2"
  * A simple [Fragment] subclass.
  *
  */
+@Suppress("DEPRECATION")
 class FragmentProcesos : Fragment(), ProcesosListener {
 
+    @Inject
+    lateinit var viewModelFactory: DaggerViewModelFactory
 
     private var adapter: CiudadAdapter? = null
     lateinit var binding:ProcesosFragmentBinding
@@ -46,10 +52,13 @@ class FragmentProcesos : Fragment(), ProcesosListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
+
+        DaggerProcesosComponent.create().inject(this)
+
         binding = DataBindingUtil.inflate(inflater,R.layout.procesos_fragment,container,false)
         binding.rvData.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL,false)
 
-        val viewModel = ViewModelProviders.of(this).get(ProcesosViewModel::class.java)
+        val viewModel = ViewModelProviders.of(this,viewModelFactory).get(ProcesosViewModel::class.java)
         binding.viewmodel1 = viewModel
 
         viewModel.procesosListener = this
@@ -141,3 +150,5 @@ class FragmentProcesos : Fragment(), ProcesosListener {
 
 
 }
+
+

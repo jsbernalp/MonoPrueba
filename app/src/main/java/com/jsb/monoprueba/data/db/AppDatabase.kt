@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase
 
 import android.database.sqlite.SQLiteOpenHelper
 import com.jsb.monoprueba.model.Ciudad
+import javax.inject.Inject
 
 class AppDatabase(context: Context):SQLiteOpenHelper(context,DATABASE_NAME,null,DATABASE_VERSION) {
 
@@ -29,7 +30,7 @@ class AppDatabase(context: Context):SQLiteOpenHelper(context,DATABASE_NAME,null,
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         db!!.execSQL("DROP TABLE IF EXISTS $TABLE_NAME")
-        onCreate(db!!)
+        onCreate(db)
     }
 
     //CRUD

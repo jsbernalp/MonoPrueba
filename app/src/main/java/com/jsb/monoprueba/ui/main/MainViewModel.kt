@@ -2,10 +2,15 @@ package com.jsb.monoprueba.ui.main
 
 import android.view.View
 import androidx.lifecycle.ViewModel
+
 import com.jsb.monoprueba.data.repositories.UserRepository
 import com.jsb.monoprueba.model.Usuario
 
-class MainViewModel : ViewModel(){
+import javax.inject.Inject
+
+class MainViewModel @Inject constructor(val userRepository: UserRepository): ViewModel() {
+
+
 
     var Nombres:String? = null
     var Email:String? = null
@@ -27,8 +32,9 @@ class MainViewModel : ViewModel(){
         usuario.Nombres = Nombres.toString()
         usuario.Password = Password.toString()
 
-       val loginResponse = UserRepository().userLogin(usuario!!)
+        val loginResponse = UserRepository().userLogin(usuario)
         mainListener?.onSuccess(loginResponse)
 
     }
 }
+
