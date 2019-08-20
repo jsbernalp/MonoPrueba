@@ -13,6 +13,7 @@ import androidx.core.view.MenuItemCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jsb.monoprueba.R
@@ -24,8 +25,9 @@ import com.jsb.monoprueba.factory.*
 import com.jsb.monoprueba.model.Ciudad
 import kotlinx.android.synthetic.main.activity_home.toolbar
 import kotlinx.android.synthetic.main.procesos_fragment.*
+import java.util.*
 import javax.inject.Inject
-
+import kotlin.collections.ArrayList
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -37,8 +39,8 @@ private const val ARG_PARAM2 = "param2"
  * A simple [Fragment] subclass.
  *
  */
-@Suppress("DEPRECATION")
 class FragmentProcesos : Fragment(), ProcesosListener {
+
 
     @Inject
     lateinit var viewModelFactory: DaggerViewModelFactory
@@ -47,6 +49,7 @@ class FragmentProcesos : Fragment(), ProcesosListener {
     lateinit var binding:ProcesosFragmentBinding
     lateinit var searchView: SearchView
     lateinit var  db: AppDatabase
+    var contador:Int = 0
     var lstCities:ArrayList<Ciudad> = ArrayList<Ciudad>()
 
     override fun onCreateView(
@@ -60,12 +63,12 @@ class FragmentProcesos : Fragment(), ProcesosListener {
 
         val viewModel = ViewModelProviders.of(this,viewModelFactory).get(ProcesosViewModel::class.java)
         binding.viewmodel1 = viewModel
-
         viewModel.procesosListener = this
 
         return binding.root
 
     }
+
 
     override fun onStart() {
         super.onStart()
@@ -78,10 +81,8 @@ class FragmentProcesos : Fragment(), ProcesosListener {
         rvData.adapter = adapter
         binding.viewmodel1?.LoadData()
 
-    }
+           showToast()
 
-    override fun onStarted() {
-        Toast.makeText(activity,"INICIO",Toast.LENGTH_LONG).show()
     }
 
     override fun onSuccess(resultResponse: LiveData<ArrayList<Ciudad>>) {
@@ -103,6 +104,7 @@ class FragmentProcesos : Fragment(), ProcesosListener {
 
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        toolbar.setTitle("MonoLegal")
         activity?.menuInflater?.inflate(R.menu.menu_item,menu)
         val item: MenuItem = menu!!.findItem(R.id.action_search1)
         searchView = MenuItemCompat
@@ -149,6 +151,26 @@ class FragmentProcesos : Fragment(), ProcesosListener {
     }
 
 
+    private fun showToast() {
+        if (contador >= 120) {
+        contadortxt.text = "TERMINO"
+        } else {
+            Timer().schedule(object : TimerTask() {
+                override fun run() {
+                    activity!!.runOnUiThread(Runnable {
+                        contadortxt.text = "Contador: $contador"
+                        contador++
+                        if (contador == 10001) {
+                            this.cancel()
+                        }
+
+                    })
+                }
+            }, 2000, 300)
+
+        }
+
+    }
 }
 
 

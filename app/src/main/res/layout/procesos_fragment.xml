@@ -5,7 +5,6 @@
     <data>
         <variable name="viewmodel1"
                   type="com.jsb.monoprueba.ui.home.fragments.procesos.ProcesosViewModel"/>
-
     </data>
     <FrameLayout
             android:layout_width="match_parent"
@@ -29,10 +28,19 @@
             <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvData"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
+                    android:layout_height="380dp">
             </androidx.recyclerview.widget.RecyclerView>
+            <TextView
+                    android:background="@color/cardview_dark_background"
+                    android:textColor="#FFF"
+                    android:id="@+id/contadortxt"
+                    android:text="Contador: "
+                    android:textSize="30dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
         </LinearLayout>
+
 
     </FrameLayout>
 

@@ -1,7 +1,7 @@
 package com.jsb.monoprueba.ui.home.fragments.procesos
 
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
-import com.jsb.monoprueba.data.db.AppDatabase
 import com.jsb.monoprueba.data.repositories.CityRepository
 import com.jsb.monoprueba.model.Ciudad
 import javax.inject.Inject
@@ -10,6 +10,7 @@ class ProcesosViewModel @Inject constructor(private val cityRepository: CityRepo
 
     var procesosListener: ProcesosListener? = null
     var lstCities:ArrayList<Ciudad> = ArrayList<Ciudad>()
+
 
     fun LoadData(){
 

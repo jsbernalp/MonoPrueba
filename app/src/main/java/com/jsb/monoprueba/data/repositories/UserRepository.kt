@@ -12,13 +12,13 @@ import javax.inject.Inject
 
 class UserRepository @Inject constructor() {
 
-    fun userLogin(usuario: Usuario):LiveData<String>{
+    fun userLogin(usuario:Usuario):LiveData<String>{
         val loginResponse = MutableLiveData<String>()
 
         MonoApi().addUsuario(usuario)
             .enqueue(object : Callback<LoginResult>{
                 override fun onFailure(call: Call<LoginResult>, t: Throwable) {
-                    loginResponse.value = t.message
+                    loginResponse.value = null
                 }
 
                 override fun onResponse(call: Call<LoginResult>, response: Response<LoginResult>) {

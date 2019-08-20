@@ -7,9 +7,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.*
 import com.jsb.monoprueba.R
+import com.jsb.monoprueba.data.db.AppDatabase
 import com.jsb.monoprueba.databinding.ActivityMainBinding
 import com.jsb.monoprueba.di.main.DaggerMainComponent
 import com.jsb.monoprueba.factory.DaggerViewModelFactory
+import com.jsb.monoprueba.model.Usuario
 import com.jsb.monoprueba.ui.home.HomeActivity
 import com.jsb.monoprueba.util.hide
 import com.jsb.monoprueba.util.show
@@ -31,27 +33,37 @@ class MainActivity : AppCompatActivity(), MainListener {
         binding.viewmodel = mainViewModel
         mainViewModel.mainListener = this
 
-
-
     }
 
-
-    override fun onStarted() {
+   override fun onStarted() {
         progress_bar.show()
     }
 
-    override fun onSuccess(loginResponse: LiveData<String>) {
-        progress_bar.hide()
-        loginResponse.observe(this, Observer {
-            toast(it)
-        })
-        val intent = Intent(this, HomeActivity::class.java)
-        startActivity(intent)
+    override fun onSuccess(
+        loginResponse: LiveData<String>,
+        usuario: Usuario
+    ) {
+        if (checkbox.isChecked){
+            loginResponse.observe(this, Observer {
+                if (it.isNullOrEmpty()){
+                    toast("Comprueba tu Conexion a Internet")
+                }else{
+                    toast(it)
+                    intentOn()
+                }
+            })
+        }else{
+            toast("Debe Aceptar los terminos y Condiciones")
+        }
     }
 
     override fun onFailure(message: String) {
-        progress_bar.hide()
         toast(message)
+    }
+
+    fun intentOn(){
+        val intent = Intent(this, HomeActivity::class.java)
+        startActivity(intent)
     }
 
 }

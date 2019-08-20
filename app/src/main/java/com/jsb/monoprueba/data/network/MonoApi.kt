@@ -22,8 +22,6 @@ interface MonoApi {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(MonoApi::class.java)
-
-
         }
     }
 }

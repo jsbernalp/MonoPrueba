@@ -64,8 +64,13 @@
                 android:layout_height="wrap_content"
                 android:text="Registrar"/>
 
+        <CheckBox
+                android:id="@+id/checkbox"
+                android:text="TERMINOS Y CONDICIONES"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
         <ProgressBar
-                android:background="#000000"
                 android:visibility="invisible"
                 android:id="@+id/progress_bar"
                 android:layout_gravity="center_horizontal"
