@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.jsb.monoprueba.R
@@ -56,19 +57,19 @@ class NotificacionesAdapter(val context: Context): RecyclerView.Adapter<Notifica
 
 
             if (ciudades.State.equals("Activo")){
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    binding.txtNombre.setBackgroundColor(context.getColor(R.color.grey))
-                    binding.txtCode.setBackgroundColor(context.getColor(R.color.white))
-                    binding.txtId.setBackgroundColor(context.getColor(R.color.grey))
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    binding.txtNombre.setBackgroundColor(ContextCompat.getColor(context,R.color.grey))
+                    binding.txtCode.setBackgroundColor(ContextCompat.getColor(context,R.color.white))
+                    binding.txtId.setBackgroundColor(ContextCompat.getColor(context,R.color.grey))
                 }
 
             }
 
             binding.lyCity.setOnClickListener { view->
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    binding.txtNombre.setBackgroundColor(context.getColor(R.color.grey))
-                    binding.txtCode.setBackgroundColor(context.getColor(R.color.white))
-                    binding.txtId.setBackgroundColor(context.getColor(R.color.grey))
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    binding.txtNombre.setBackgroundColor(ContextCompat.getColor(context,R.color.grey))
+                    binding.txtCode.setBackgroundColor(ContextCompat.getColor(context,R.color.white))
+                    binding.txtId.setBackgroundColor(ContextCompat.getColor(context,R.color.grey))
                 }
                 db.updateSql(ciudades.Code)
                 notifyDataSetChanged()

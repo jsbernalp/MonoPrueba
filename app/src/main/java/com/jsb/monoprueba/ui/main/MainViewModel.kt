@@ -22,6 +22,8 @@ class MainViewModel @Inject constructor(val userRepository: UserRepository): Vie
 
     fun onRegisterButtonClick(view: View){
 
+
+
             if (Nombres.isNullOrEmpty() || Email.isNullOrEmpty() || Password.isNullOrEmpty()){
                 mainListener?.onFailure("invalid email or name or password")
                 return

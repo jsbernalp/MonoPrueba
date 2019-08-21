@@ -11,6 +11,7 @@ import com.jsb.monoprueba.data.db.AppDatabase
 import com.jsb.monoprueba.databinding.ActivityMainBinding
 import com.jsb.monoprueba.di.main.DaggerMainComponent
 import com.jsb.monoprueba.factory.DaggerViewModelFactory
+import com.jsb.monoprueba.model.Ciudad
 import com.jsb.monoprueba.model.Usuario
 import com.jsb.monoprueba.ui.home.HomeActivity
 import com.jsb.monoprueba.util.hide
@@ -23,14 +24,22 @@ class MainActivity : AppCompatActivity(), MainListener {
 
     @Inject
     lateinit var viewModelFactory: DaggerViewModelFactory
+    lateinit var db: AppDatabase
+    var lstUser:ArrayList<Usuario> = ArrayList<Usuario>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         DaggerMainComponent.create().inject(this)
         val binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         val mainViewModel = ViewModelProviders.of(this,viewModelFactory).get(MainViewModel::class.java)
-
         binding.viewmodel = mainViewModel
+
+        db = this.let { AppDatabase(it) }
+        lstUser = db.getUsers()
+        if (lstUser.isNotEmpty()){
+            intentOn()
+        }
+
         mainViewModel.mainListener = this
 
     }
@@ -39,22 +48,22 @@ class MainActivity : AppCompatActivity(), MainListener {
         progress_bar.show()
     }
 
-    override fun onSuccess(
-        loginResponse: LiveData<String>,
-        usuario: Usuario
-    ) {
-        if (checkbox.isChecked){
+    override fun onSuccess(loginResponse: LiveData<String>, usuario: Usuario) {
+
+        if (checkbox.isChecked) {
             loginResponse.observe(this, Observer {
-                if (it.isNullOrEmpty()){
+                if (it.isNullOrEmpty()) {
                     toast("Comprueba tu Conexion a Internet")
-                }else{
+                } else {
                     toast(it)
+                    db.addUser(usuario)
                     intentOn()
                 }
             })
-        }else{
+        } else {
             toast("Debe Aceptar los terminos y Condiciones")
         }
+
     }
 
     override fun onFailure(message: String) {
